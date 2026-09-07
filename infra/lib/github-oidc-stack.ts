@@ -9,6 +9,14 @@ export interface GithubOidcStackProps extends cdk.StackProps {
 
 const GITHUB_OIDC_HOST = 'token.actions.githubusercontent.com';
 
+export const githubSubjectPrefixes = (config: SiteConfig): string[] => {
+  const [owner, name] = config.githubRepository.split('/');
+  return [
+    `repo:${owner}/${name}`,
+    `repo:${owner}@${config.githubOwnerId}/${name}@${config.githubRepositoryId}`,
+  ];
+};
+
 /**
  * GitHub Actions -> AWS keyless auth. Deployed once by hand; afterwards every
  * deploy runs from the workflow via the role exported here.
@@ -31,10 +39,12 @@ export class GithubOidcStack extends cdk.Stack {
 
     // Only pushes to the deploy branch, or jobs bound to the deploy environment,
     // may assume the role. Anything else from the repo (PRs, other branches) is denied.
-    const allowedSubjects = [
-      `repo:${config.githubRepository}:ref:refs/heads/${config.githubBranch}`,
-      `repo:${config.githubRepository}:environment:${config.githubEnvironment}`,
-    ];
+    // GitHub emits either the legacy subject (`repo:owner/name:...`) or the immutable one
+    // (`repo:owner@ID/name@ID:...`) depending on the repo's OIDC settings; accept both.
+    const allowedSubjects = githubSubjectPrefixes(config).flatMap(prefix => [
+      `${prefix}:ref:refs/heads/${config.githubBranch}`,
+      `${prefix}:environment:${config.githubEnvironment}`,
+    ]);
 
     this.deployRole = new iam.Role(this, 'GithubDeployRole', {
       roleName: `${config.tags.project}-github-deploy`,

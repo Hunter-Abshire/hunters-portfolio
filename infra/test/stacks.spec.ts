@@ -136,6 +136,8 @@ describe('GithubOidcStack', () => {
                 'token.actions.githubusercontent.com:sub': [
                   `repo:${config.githubRepository}:ref:refs/heads/${config.githubBranch}`,
                   `repo:${config.githubRepository}:environment:${config.githubEnvironment}`,
+                  `repo:Hunter-Abshire@${config.githubOwnerId}/hunters-portfolio@${config.githubRepositoryId}:ref:refs/heads/${config.githubBranch}`,
+                  `repo:Hunter-Abshire@${config.githubOwnerId}/hunters-portfolio@${config.githubRepositoryId}:environment:${config.githubEnvironment}`,
                 ],
               },
             },

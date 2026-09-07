@@ -9,6 +9,13 @@ export interface SiteConfig {
   readonly alternateDomainNames: readonly string[];
   /** GitHub `owner/repo` allowed to assume the deploy role via OIDC. */
   readonly githubRepository: string;
+  /**
+   * Numeric owner and repository ids. GitHub now issues immutable OIDC subjects of the form
+   * `repo:owner@OWNER_ID/name@REPO_ID:...`, so the trust policy must match on these too.
+   * (`gh api repos/<owner>/<repo> --jq '{owner: .owner.id, repo: .id}'`)
+   */
+  readonly githubOwnerId: number;
+  readonly githubRepositoryId: number;
   /** Branch whose pushes may deploy. */
   readonly githubBranch: string;
   /** GitHub Actions environment name used in the OIDC `sub` claim. */
@@ -22,6 +29,8 @@ const CONFIGS: Readonly<Record<EnvName, SiteConfig>> = {
     domainName: 'hunters-portfolio.com',
     alternateDomainNames: ['www.hunters-portfolio.com'],
     githubRepository: 'Hunter-Abshire/hunters-portfolio',
+    githubOwnerId: 120337190,
+    githubRepositoryId: 1359698723,
     githubBranch: 'main',
     githubEnvironment: 'prod',
     tags: { environment: 'prod', owner: 'hunter-abshire', project: 'hunters-portfolio' },
