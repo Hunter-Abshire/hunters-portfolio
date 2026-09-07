@@ -64,6 +64,7 @@ export const NAV_SECTIONS = [
   { id: 'experience', label: 'Experience' },
   { id: 'skills', label: 'Skills' },
   { id: 'education', label: 'Education' },
+  { id: 'colophon', label: 'How this site ships' },
 ] as const;
 
 export const CASE_STUDIES: readonly CaseStudy[] = [

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
 
 export const THEMES = { dark: 'dark', light: 'light' } as const;
 export type Theme = (typeof THEMES)[keyof typeof THEMES];
@@ -29,10 +30,18 @@ export const useTheme = (): { theme: Theme; toggleTheme: () => void } => {
     }
   }, [theme]);
 
-  const toggleTheme = useCallback(
-    () => setTheme(current => (current === THEMES.dark ? THEMES.light : THEMES.dark)),
-    [],
-  );
+  const toggleTheme = useCallback(() => {
+    const next = (current: Theme): Theme => (current === THEMES.dark ? THEMES.light : THEMES.dark);
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Circular wipe between themes where the View Transitions API exists; instant elsewhere.
+    if (!reduced && typeof document.startViewTransition === 'function') {
+      document.startViewTransition(() => {
+        flushSync(() => setTheme(next));
+      });
+      return;
+    }
+    setTheme(next);
+  }, []);
 
   return { theme, toggleTheme };
 };

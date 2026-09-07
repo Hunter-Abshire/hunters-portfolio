@@ -1,23 +1,27 @@
-import type { JSX } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { NAV_SECTIONS, PROFILE } from '../data/profile';
 import { useActiveSection } from '../hooks/useActiveSection';
 import type { Theme } from '../hooks/useTheme';
+import { Headshot } from './Headshot';
 import { GithubIcon, LinkedinIcon, MailIcon } from './Icons';
 import { ThemeToggle } from './ThemeToggle';
 
 interface RailProps {
   readonly theme: Theme;
   readonly onToggleTheme: () => void;
+  /** Extra controls rendered next to the theme toggle (e.g. the ⌘K palette trigger). */
+  readonly extras?: ReactNode;
 }
 
 const SECTION_IDS = NAV_SECTIONS.map(section => section.id);
 
-export const Rail = ({ theme, onToggleTheme }: RailProps): JSX.Element => {
+export const Rail = ({ theme, onToggleTheme, extras }: RailProps): JSX.Element => {
   const active = useActiveSection(SECTION_IDS);
 
   return (
     <header className="rail">
       <div>
+        <Headshot />
         <p className="hero__eyebrow mono">~/hunter-abshire</p>
         <h1 className="hero__name">{PROFILE.name}</h1>
         <p className="hero__title">{PROFILE.title}</p>
@@ -67,6 +71,7 @@ export const Rail = ({ theme, onToggleTheme }: RailProps): JSX.Element => {
           <MailIcon />
         </a>
         <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+        {extras}
       </div>
     </header>
   );
