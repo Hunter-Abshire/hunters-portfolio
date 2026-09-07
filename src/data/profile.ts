@@ -48,8 +48,8 @@ export const PROFILE = {
     'I build and operate secure, multi-account AWS platforms: infrastructure as code, CI/CD, and the security controls that let payment systems pass audits without slowing teams down.',
   email: 'hunterkabshire@gmail.com',
   github: 'https://github.com/Hunter-Abshire',
-  linkedin: 'https://www.linkedin.com/in/hunter-abshire',
-  // Drop a PDF into public/ and set this to enable the Resume button (check it for details you don't want public).
+  linkedin: 'https://www.linkedin.com/in/hunter-abshire/',
+  // Intentionally no resume PDF: the site itself is the resume. Set to a public/ path to enable the button.
   resumeHref: undefined as string | undefined,
   certifications: [
     'AWS Certified Security – Specialty',
