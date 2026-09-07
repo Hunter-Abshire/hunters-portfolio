@@ -11,3 +11,4 @@ npm-debug.log*
 infra/cdk.out
 infra/cdk-outputs.json
 infra/cdk.context.json
+infra/oidc-outputs.json
