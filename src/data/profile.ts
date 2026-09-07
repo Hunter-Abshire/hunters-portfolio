@@ -52,10 +52,12 @@ export const PROFILE = {
   // Intentionally no resume PDF: the site itself is the resume. Set to a public/ path to enable the button.
   resumeHref: undefined as string | undefined,
   certifications: [
+    'AWS Certified Solutions Architect – Professional',
     'AWS Certified Security – Specialty',
     'AWS Certified Solutions Architect – Associate',
     'AWS Certified Developer – Associate',
     'AWS Certified SysOps Administrator – Associate',
+    'AWS Certified Cloud Practitioner',
   ],
 } as const;
 
