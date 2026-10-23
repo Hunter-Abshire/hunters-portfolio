@@ -119,20 +119,25 @@ button {
   .layout {
     grid-template-columns: minmax(300px, 2fr) 3fr;
     gap: var(--space-16);
-    padding: var(--space-16) var(--space-8);
+    padding: var(--space-12) var(--space-8);
   }
   .rail {
     position: sticky;
-    top: var(--space-16);
+    top: var(--space-12);
     align-self: start;
-    max-height: calc(100vh - var(--space-16) * 2);
+    height: calc(100vh - var(--space-12) * 2);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+  /* Content scrolls inside the rail; the footer with the social links never leaves the screen. */
+  .rail > div:first-child {
+    min-height: 0;
+    flex: 1 1 auto;
     overflow-y: auto;
     scrollbar-width: none;
   }
-  .rail::-webkit-scrollbar {
+  .rail > div:first-child::-webkit-scrollbar {
     display: none;
   }
 }
@@ -165,8 +170,8 @@ button {
 }
 @media (min-width: 1024px) {
   .headshot {
-    width: 136px;
-    height: 136px;
+    width: 120px;
+    height: 120px;
   }
 }
 
@@ -231,7 +236,7 @@ button {
 
 /* Nav */
 .nav {
-  margin-top: var(--space-8);
+  margin-top: var(--space-6);
   display: none;
 }
 @media (min-width: 1024px) {
