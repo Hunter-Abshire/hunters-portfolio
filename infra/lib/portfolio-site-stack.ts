@@ -128,8 +128,8 @@ export class PortfolioSiteStack extends cdk.Stack {
     new s3deploy.BucketDeployment(this, 'DeployRoot', {
       destinationBucket: this.bucket,
       sources: [s3deploy.Source.asset(distDir, { exclude: [`${IMMUTABLE_ASSETS_PREFIX}*`] })],
-      // prune would delete assets/ uploaded by the other deployment.
-      prune: false,
+      prune: true,
+      exclude: [`${IMMUTABLE_ASSETS_PREFIX}*`],
       cacheControl: [s3deploy.CacheControl.noCache()],
       distribution: this.distribution,
       distributionPaths: ['/*'],
